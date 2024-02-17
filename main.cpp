@@ -151,7 +151,7 @@ void initializeFileDescriptorPoll()
 }
 
 /*
- * Create a pull of event that will trigger
+ * Create a poll of event that will trigger
  * multiple action from the push buttons thread.
  *
  * First element of the poll will trigger a RED LED on/off
