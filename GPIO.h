@@ -71,6 +71,7 @@ class GPIO
     int writeDirection(std::string direction)
     {
       std::ofstream dir(getDirectionPath());
+
       if (!dir.is_open())
       {
         std::cerr << "Cannot open the file!\n";
@@ -86,7 +87,8 @@ class GPIO
     int openGPIOValue()
     {
       this->ledFD = open(getValuePath().c_str(), O_RDWR);
-      if (this->ledFD < 0)
+
+      if (0 > this->ledFD)
       {
         std::cerr << "Cannot open the file!\n";
         return 1;
@@ -108,16 +110,20 @@ class GPIO
     {
       char buf[50];
       int len = snprintf(buf, 50, edgesPath.c_str());
-      int fd = open(buf, O_WRONLY);
-      if (fd < 0)
+      int fd  = open(buf, O_WRONLY);
+
+      if (0 > fd)
       {
         printf("Cannot open the file!");
       }
+
       int writeEdge = write(fd, edge, strlen(edge) + 1);
-      if (writeEdge < 0)
+
+      if (0 > writeEdge)
       {
         printf("Cannot write the file!");
       }
+
       close(fd);
       return 0;
     }
