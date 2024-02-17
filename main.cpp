@@ -3,7 +3,7 @@
 #include "GPIO.h"
 
 static pthread_mutex_t button_mutex = PTHREAD_MUTEX_INITIALIZER;
-static pthread_mutex_t lock1 = PTHREAD_MUTEX_INITIALIZER;
+static pthread_mutex_t lock1        = PTHREAD_MUTEX_INITIALIZER;
 struct pollfd fdset[3];
 
 GPIO redLed(23);
@@ -27,7 +27,7 @@ void *althernateBlink(void *value)
   while (true)
   {
     sem_wait(&semaphore1);
-    int openedLEDRed = redLed.openGPIOValue();
+    int openedLEDRed    = redLed.openGPIOValue();
     int openedLEDYellow = yellowLed.openGPIOValue();
 
     printf("Start alternating blinking.\n");
@@ -45,7 +45,7 @@ void *althernateBlink(void *value)
     close(openedLEDRed);
     close(openedLEDYellow);
   }
-  
+
   pthread_mutex_unlock(&lock1);
   return NULL;
 }
