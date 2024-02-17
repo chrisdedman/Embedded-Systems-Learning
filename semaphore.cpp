@@ -45,6 +45,7 @@ void *althernateBlink(void *value)
     close(openedLEDRed);
     close(openedLEDYellow);
   }
+  
   pthread_mutex_unlock(&lock1);
   return NULL;
 }
@@ -57,14 +58,15 @@ void yellowLEDShow(GPIO &yellow)
 {
   yellow.writeDirection("out");
   int openYellowLED = yellow.openGPIOValue();
+
   for (int i = 0; i < 7; i++)
   {
-    if (i == 2)
+    if (2 == i)
     {
       sleep(1);
     }
 
-    if (i == 4)
+    if (4 == i)
     {
       sleep(1);
     }
@@ -74,6 +76,7 @@ void yellowLEDShow(GPIO &yellow)
     yellow.turnOffLED();
     sleep(1);
   }
+
   close(openYellowLED);
 }
 
@@ -85,9 +88,10 @@ void redLEDShow(GPIO &red)
 {
   red.writeDirection("out");
   int openRedLED = red.openGPIOValue();
+
   for (int i = 0; i < 5; i++)
   {
-    if (i == 3)
+    if (3 == i)
     {
       sleep(1);
     }
@@ -97,6 +101,7 @@ void redLEDShow(GPIO &red)
     red.turnOffLED();
     sleep(1);
   }
+
   close(openRedLED);
 }
 
@@ -110,18 +115,20 @@ void interactWithLED(GPIO &led)
   led.writeDirection("out");
   int openedLED = led.openGPIOValue();
 
-  if (led.getLEDValue() == 1)
+  if (1 == led.getLEDValue())
   {
     led.turnOffLED();
     led.setLEDValue(0);
     printf("LED Off!\n");
   }
+
   else
   {
     led.turnOnLED();
     led.setLEDValue(1);
     printf("LED On!\n");
   }
+
   close(openedLED);
 }
 
@@ -130,17 +137,17 @@ void interactWithLED(GPIO &led)
  */
 void initializeFileDescriptorPoll()
 {
-  fdset[0].fd = button.openGPIOValue();
-  fdset[0].events = POLLPRI;
-  fdset[0].revents = 0;
+  fdset[0].fd       = button.openGPIOValue();
+  fdset[0].events   = POLLPRI;
+  fdset[0].revents  = 0;
 
-  fdset[1].fd = button2.openGPIOValue();
-  fdset[1].events = POLLPRI;
-  fdset[1].revents = 0;
+  fdset[1].fd       = button2.openGPIOValue();
+  fdset[1].events   = POLLPRI;
+  fdset[1].revents  = 0;
 
-  fdset[2].fd = button3.openGPIOValue();
-  fdset[2].events = POLLPRI;
-  fdset[2].revents = 0;
+  fdset[2].fd       = button3.openGPIOValue();
+  fdset[2].events   = POLLPRI;
+  fdset[2].revents  = 0;
 }
 
 /*
@@ -168,24 +175,28 @@ void *pushButtonThread(void *value)
     read(fdset[2].fd, buf, 4);
 
     int rc = poll(fdset, 3, 10000);
-    if (rc < 0)
+    if (0 > rc)
     {
       printf("\npoll() failed!\n");
     }
-    else if (rc == 0)
+
+    else if (0 == rc)
     {
       printf(".");
     }
+
     else
     {
       if (fdset[0].revents & POLLPRI)
       {
         interactWithLED(redLed);
       }
+
       if (fdset[1].revents & POLLPRI)
       {
         interactWithLED(yellowLed);
       }
+
       if (fdset[2].revents & POLLPRI)
       {
         printf("\nStart Red Light Show!\n");
@@ -194,6 +205,7 @@ void *pushButtonThread(void *value)
         printf("End Red Light Show!\n");
       }
     }
+
     fflush(stdout);
   }
 
@@ -221,6 +233,7 @@ void *lightShowLED(void *value)
     sem_post(&semaphore1);
     printf("Semaphore posted!\n");
   }
+
   return NULL;
 }
 
@@ -233,12 +246,13 @@ int main()
   sem_init(&semaphore1, 0, 0);
   sem_init(&semaphore2, 0, 0);
 
-  if (pthread_mutex_init(&button_mutex, NULL) != 0)
+  if (0 != pthread_mutex_init(&button_mutex, NULL))
   {
     printf("\n Mutex init failed!\n");
     return 1;
   }
-  if (pthread_mutex_init(&lock1, NULL) != 0)
+
+  if (0 != pthread_mutex_init(&lock1, NULL))
   {
     printf("\n Mutex init failed!\n");
     return 1;
