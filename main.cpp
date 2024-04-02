@@ -1,5 +1,8 @@
 #include <pthread.h>
 #include <semaphore.h>
+#include <fstream>
+#include <poll.h>
+#include <unistd.h>
 #include "GPIO.h"
 
 static pthread_mutex_t button_mutex = PTHREAD_MUTEX_INITIALIZER;
