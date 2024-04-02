@@ -1,11 +1,4 @@
 #include <iostream>
-#include <fstream>
-#include <unistd.h>
-#include <fcntl.h>
-#include <poll.h>
-#include "string.h"
-
-#define GPIO_PATH "/sys/class/gpio/"
 
 class GPIO
 {
@@ -18,122 +11,22 @@ class GPIO
     int ledFD;
     int ledValue;
 
-    void setDirectionPath()
-    {
-      char buff[100];
-      snprintf(buff, sizeof(buff), "%sgpio%d/direction", GPIO_PATH, pin);
-      this->directionPath = buff;
-    }
+    void setDirectionPath();
+    void setValuePath();
 
-    void setValuePath()
-    {
-      char buff[100];
-      snprintf(buff, sizeof(buff), "%sgpio%d/value", GPIO_PATH, pin);
-      this->valuePath = buff;
-    }
-
-    void setEdgePath()
-    {
-      char buff[100];
-      snprintf(buff, sizeof(buff), "%sgpio%d/edge", GPIO_PATH, pin);
-      this->edgesPath = buff;
-    }
-
-    std::string getDirectionPath()
-    {
-      return this->directionPath;
-    }
-
-    std::string getValuePath()
-    {
-      return this->valuePath;
-    }
+    void setEdgePath();
+    std::string getDirectionPath();
+    std::string getValuePath();
 
   public:
-    GPIO(int pin)
-    {
-      this->pin = pin;
-      setDirectionPath();
-      setValuePath();
-      setEdgePath();
-    }
-
-    void setLEDValue(int state)
-    {
-      this->ledValue = state;
-    }
-
-    int getLEDValue()
-    {
-      return this->ledValue;
-    }
-
-    int writeDirection(std::string direction)
-    {
-      std::ofstream dir(getDirectionPath());
-
-      if (!dir.is_open())
-      {
-        std::cerr << "Cannot open the file!\n";
-        return 1;
-      }
-
-      dir << direction;
-      dir.close();
-
-      return 0;
-    }
-
-    int openGPIOValue()
-    {
-      this->ledFD = open(getValuePath().c_str(), O_RDWR);
-
-      if (0 > this->ledFD)
-      {
-        std::cerr << "Cannot open the file!\n";
-        return 1;
-      }
-      return ledFD;
-    }
-
-    void turnOnLED()
-    {
-      write(this->ledFD, "1", 1);
-    }
-
-    void turnOffLED()
-    {
-      write(this->ledFD, "0", 1);
-    }
-
-    int setEdgeGPIO(const char *edge)
-    {
-      char buf[50];
-      int len = snprintf(buf, 50, edgesPath.c_str());
-      int fd  = open(buf, O_WRONLY);
-
-      if (0 > fd)
-      {
-        printf("Cannot open the file!");
-      }
-
-      int writeEdge = write(fd, edge, strlen(edge) + 1);
-
-      if (0 > writeEdge)
-      {
-        printf("Cannot write the file!");
-      }
-
-      close(fd);
-      return 0;
-    }
-
-    // Keep this function for later
-    void readFromGPIO(char *buf)
-    {
-      openGPIOValue();
-      lseek(ledFD, 0, SEEK_SET);
-      read(ledFD, buf, 4);
-      close(ledFD);
-    }
+    GPIO(int pin);
+    ~GPIO();
+    void setLEDValue(int state);
+    int getLEDValue();
+    int writeDirection(std::string direction);
+    int openGPIOValue();
+    void turnOnLED();
+    void turnOffLED();
+    int setEdgeGPIO(const char *edge);
+    void readFromGPIO(char *buf);
 };
