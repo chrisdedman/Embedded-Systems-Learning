@@ -121,7 +121,7 @@ int GPIO::setEdgeGPIO(const char *edge)
   return 0;
 }
 
-// Keep this function for later
+// Not used, yet. Keep this function for later.
 void GPIO::readFromGPIO(char *buf)
 {
   openGPIOValue();
