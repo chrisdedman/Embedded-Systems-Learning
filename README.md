@@ -7,13 +7,14 @@ To run the code in this repository, you need to have a Raspberry Pi 3 Model B+ a
 
 1. Clone the repository to your Raspberry Pi.
 2. You will need to have wires, a breadboard, a Red LED, Yellow LED, and a push button connected to the Raspberry Pi GPIO pins. The GPIO pins that wil be open at startup are defined in the export_gpio.sh file. Edit the file [export_gpio.sh](#export_gpiosh) and [main.cpp](#maincpp) to match the GPIO pins you have connected to the Raspberry Pi.
-3. Once the above is completed, run the following command to compile the code and run the program:
+3. Once the above is completed, run the following command to open the GPIOs, compile the code and run the program:
 ```bash
-make run
+make init   # will open the GPIOs defined in the export_gpio.sh file, need to be done at startup only.
+make run    # will compile the code and run the program
 ```
 4. Run the following command to get more options:
 ```bash
-make help
+make help   # will display the help menu
 ```
 
 ## Code Structure
