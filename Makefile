@@ -1,8 +1,14 @@
+# This Makefile provides a set of commands to compile, create object files, 
+# and run an embedded systems project. It also includes additional commands 
+# for cleaning up object files and executables, as well as initializing GPIO.
+
+# The 'all' target is the default target that will be executed when no specific 
+# target is provided. It depends on the 'compile', 'object', and 'run' targets.
 all: compile object run
 
 help:
 	@echo "Usage: make [command]"
-	@echo "  init 		 - open gpio"
+	@echo "  init      - open gpio"
 	@echo "  run       - compile and run the project"
 	@echo "  compile   - compile the project"
 	@echo "  object    - create object files"
