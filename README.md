@@ -1,5 +1,23 @@
 <h2 align="center">Embedded Systems Development Learning</h2>
 
+This repository contains all the code I have written while learning about embedded systems development. I have used the Raspberry Pi 3 Model B+ as my embedded system development board, and I have used the C++ programming language to write the code for the Raspberry Pi.
+
+## How to run
+To run the code in this repository, you need to have a Raspberry Pi 3 Model B+ and a breadboard with a Red LED, Yellow LED, and a push button.
+
+1. Clone the repository to your Raspberry Pi.
+2. You will need to have wires, a breadboard, a Red LED, Yellow LED, and a push button connected to the Raspberry Pi GPIO pins. The GPIO pins that wil be open at startup are defined in the export_gpio.sh file. Edit the file [export_gpio.sh](#export_gpiosh) and [main.cpp](#maincpp) to match the GPIO pins you have connected to the Raspberry Pi.
+3. Once the above is completed, run the following command to compile the code and run the program:
+```bash
+make run
+```
+4. Run the following command to get more options:
+```bash
+make help
+```
+
+## Code Structure
+
 #### export_gpio.sh
 This file contain all the General Purposes Input/Output (GPIO) pins to be opened at startup of the raspberry pi.
 
