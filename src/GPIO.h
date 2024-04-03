@@ -18,7 +18,7 @@
 
 /**
  * @class GPIO
- * @brief Represents a GPIO pin on an embedded system.
+ * @brief Represents a GPIO configuration on the Raspberry Pi 3 B+ board.
  * 
  * This class provides functionality to control and interact with a GPIO pin.
  * It allows setting the pin direction, reading and writing the pin value,
