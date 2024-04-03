@@ -2,6 +2,7 @@ all: compile object run
 
 help:
 	@echo "Usage: make [command]"
+	@echo "  init 		 - open gpio"
 	@echo "  run       - compile and run the project"
 	@echo "  compile   - compile the project"
 	@echo "  object    - create object files"
@@ -24,3 +25,8 @@ run: compile
 clean:
 	@echo cleaning...
 	@rm -f bin/main bin/main.o
+
+init:
+	@echo opening gpio...
+	@sudo chmod +x export-gpio.sh
+	@./export-gpio.sh
