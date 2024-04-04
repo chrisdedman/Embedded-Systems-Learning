@@ -22,7 +22,7 @@ object:
 
 compile:
 	@echo compiling...
-	@gcc -o bin/main src/main.c
+	@gcc -o bin/main src/main.cpp
 
 run: compile
 	@echo running...
